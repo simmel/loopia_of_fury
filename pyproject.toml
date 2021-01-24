@@ -1,0 +1,12 @@
+[tool.poetry]
+name = "loopia_of_fury"
+version = "0.1.0"
+description = 'Loopia of Fury - A "DynDNS" client for Loopia when you have MFA/BankID enabled '
+authors = ["Simon Lundström <github-commits@soy.se>"]
+
+[tool.poetry.dependencies]
+python = "^3.5"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
