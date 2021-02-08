@@ -11,6 +11,7 @@ pylint = "^2.6.0"
 [tool.poetry.dev-dependencies]
 black = "^20.8b1"
 mypy = "^0.800"
+pytest = "^6.2.2"
 
 [tool.poetry.scripts]
 loopia_of_fury = 'loopia_of_fury:main'
