@@ -8,3 +8,10 @@ def test_version():
 def test_args_parse():
     args = parse_args()
     assert type(args) == argparse.Namespace
+
+
+def test_args_password():
+    password = "arg-password"
+    args = parse_args(argv=["--password", password])
+    assert args.password == password
+    assert type(args) == argparse.Namespace
