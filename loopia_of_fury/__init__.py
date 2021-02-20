@@ -11,6 +11,7 @@ def parse_args(
     parser = argparse.ArgumentParser(description="test")
     parser.add_argument(
         "--username",
+        required=True,
     )
     parser.add_argument(
         "--password",
