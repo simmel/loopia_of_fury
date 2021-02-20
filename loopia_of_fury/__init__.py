@@ -10,6 +10,9 @@ def parse_args(
 ) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="test")
     parser.add_argument(
+        "--username",
+    )
+    parser.add_argument(
         "--password",
         default=os.getenv("LOOPIA_PASSWORD"),
         help="You can also set the password via the environment variable LOOPIA_PASSWORD",
