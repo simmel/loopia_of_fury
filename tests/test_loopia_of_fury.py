@@ -27,3 +27,9 @@ def test_args_password_env(monkeypatch):
     monkeypatch.setattr(os, "environ", envs)
     args = parse_args()
     assert args.password == password
+
+
+def test_args_username_arg():
+    username = "arg-username"
+    args = parse_args(argv=["--username", username, "--password", "arg-password"])
+    assert args.username == username
