@@ -17,4 +17,5 @@ def parse_args(
 
 
 def main() -> None:
+    args = parse_args()
     print("gurka")
