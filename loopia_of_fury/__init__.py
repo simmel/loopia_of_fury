@@ -1,5 +1,6 @@
 __version__ = "0.1.0"
 import argparse
+import os
 import sys
 from typing import Optional, Sequence
 
@@ -10,6 +11,8 @@ def parse_args(
     parser = argparse.ArgumentParser(description="test")
     parser.add_argument(
         "--password",
+        default=os.getenv("LOOPIA_PASSWORD"),
+        help="You can also set the password via the environment variable LOOPIA_PASSWORD",
     )
 
     args = parser.parse_args(args=argv)
