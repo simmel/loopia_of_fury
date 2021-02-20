@@ -14,4 +14,3 @@ def test_args_password_arg():
     password = "arg-password"
     args = parse_args(argv=["--password", password])
     assert args.password == password
-    assert type(args) == argparse.Namespace
