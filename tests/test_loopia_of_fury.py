@@ -24,3 +24,8 @@ def test_args_password_env(monkeypatch):
     monkeypatch.setattr(os, "environ", envs)
     args = parse_args()
     assert args.password == password
+
+
+def test_args_password_none():
+    args = parse_args()
+    assert args.password is not None
