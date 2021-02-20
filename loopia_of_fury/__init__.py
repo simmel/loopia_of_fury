@@ -21,7 +21,7 @@ def parse_args(
 
     args = parser.parse_args(args=argv)
     if not args.password:
-        parser.error("Password is not set: ({!r})".format(args.password))
+        parser.error("Password is required: ({!r})".format(args.password))
     return args
 
 
