@@ -15,36 +15,21 @@ def test_args_password_none():
     assert e.value.code == 2
 
 
-def test_args_password_arg():
+def test_args_required():
+    username = "arg-username"
     password = "arg-password"
-    args = parse_args(argv=["--username", "arg-username", "--password", password])
+    domain = "arg-domain"
+    args = parse_args(
+        argv=["--username", username, "--password", password, "--domain", domain]
+    )
+    assert args.username == username
     assert args.password == password
+    assert args.domain == domain
 
 
 def test_args_password_env(monkeypatch):
     password = "env-password"
     envs = {"LOOPIA_PASSWORD": password}
     monkeypatch.setattr(os, "environ", envs)
-    args = parse_args(argv=["--username", "arg-username"])
+    args = parse_args(argv=["--username", "arg-username", "--domain", "arg-domain"])
     assert args.password == password
-
-
-def test_args_username_arg():
-    username = "arg-username"
-    args = parse_args(argv=["--username", username, "--password", "arg-password"])
-    assert args.username == username
-
-
-def test_args_domain():
-    domain = "arg-domain"
-    args = parse_args(
-        argv=[
-            "--domain",
-            domain,
-            "--username",
-            "arg-username",
-            "--password",
-            "arg-password",
-        ]
-    )
-    assert args.domain == domain
