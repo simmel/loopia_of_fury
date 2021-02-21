@@ -18,6 +18,10 @@ def parse_args(
         default=os.getenv("LOOPIA_PASSWORD"),
         help="You can also set the password via the environment variable LOOPIA_PASSWORD",
     )
+    parser.add_argument(
+        "--domain",
+        required=True,
+    )
 
     args = parser.parse_args(args=argv)
     if not args.password:
