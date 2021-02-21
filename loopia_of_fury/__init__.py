@@ -26,6 +26,10 @@ def parse_args(
         "--subdomain",
         default="@",
     )
+    parser.add_argument(
+        "--record-type",
+        default="A",
+    )
 
     args = parser.parse_args(args=argv)
     if not args.password:
