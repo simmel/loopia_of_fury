@@ -102,3 +102,7 @@ def test_args_ip(provided, expected):
         )
     args = parse_args(argv=argv)
     assert args.ip == expected
+
+
+def test_get_ip():
+    assert get_ip()
