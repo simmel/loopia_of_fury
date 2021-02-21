@@ -104,5 +104,8 @@ def test_args_ip(provided, expected):
     assert args.ip == expected
 
 
-def test_get_ip():
-    assert get_ip()
+@pytest.mark.parametrize(
+    "provided,expected", [("192.0.2.1", "192.0.2.1"), ("2001:DB8::1", "2001:DB8::1")]
+)
+def test_get_ip(provided, expected):
+    assert get_ip() == expected
