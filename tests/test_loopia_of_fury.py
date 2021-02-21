@@ -1,7 +1,7 @@
 import os
 
 import pytest
-from loopia_of_fury import __version__, argparse, parse_args
+from loopia_of_fury import __version__, argparse, get_ip, parse_args
 
 
 def test_version():

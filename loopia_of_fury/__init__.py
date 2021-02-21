@@ -40,6 +40,10 @@ def parse_args(
     return args
 
 
+def get_ip() -> bool:
+    return True
+
+
 def main() -> None:
     args = parse_args()
     print("gurka")
