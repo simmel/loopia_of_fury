@@ -33,3 +33,20 @@ def test_args_password_env(monkeypatch):
     monkeypatch.setattr(os, "environ", envs)
     args = parse_args(argv=["--username", "arg-username", "--domain", "arg-domain"])
     assert args.password == password
+
+
+def test_args_subdomain():
+    subdomain = "arg-subdomain"
+    args = parse_args(
+        argv=[
+            "--username",
+            "arg-username",
+            "--password",
+            "arg-password",
+            "--domain",
+            "arg-domain",
+            "--subdomain",
+            "arg-subdomain",
+        ]
+    )
+    assert args.subdomain == subdomain
