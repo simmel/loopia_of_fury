@@ -1,8 +1,9 @@
 __version__ = "0.1.0"
 import argparse
+import ipaddress
 import os
 import sys
-from typing import Optional, Sequence
+from typing import Optional, Sequence, Union
 
 
 def parse_args(
@@ -40,8 +41,8 @@ def parse_args(
     return args
 
 
-def get_ip() -> bool:
-    return True
+def get_ip() -> Optional[Union[ipaddress.IPv4Address, ipaddress.IPv6Address]]:
+    return None
 
 
 def main() -> None:
