@@ -79,3 +79,26 @@ def test_args_record_type(provided, expected):
         )
     args = parse_args(argv=argv)
     assert args.record_type == expected
+
+
+@pytest.mark.parametrize(
+    "provided,expected", [("192.0.2.1", "192.0.2.1"), (None, None)]
+)
+def test_args_ip(provided, expected):
+    argv = [
+        "--username",
+        "arg-username",
+        "--password",
+        "arg-password",
+        "--domain",
+        "arg-domain",
+    ]
+    if provided:
+        argv.extend(
+            [
+                "--ip",
+                provided,
+            ]
+        )
+    args = parse_args(argv=argv)
+    assert args.ip == expected
