@@ -35,18 +35,24 @@ def test_args_password_env(monkeypatch):
     assert args.password == password
 
 
-def test_args_subdomain():
-    subdomain = "arg-subdomain"
-    args = parse_args(
-        argv=[
-            "--username",
-            "arg-username",
-            "--password",
-            "arg-password",
-            "--domain",
-            "arg-domain",
-            "--subdomain",
-            "arg-subdomain",
-        ]
-    )
-    assert args.subdomain == subdomain
+@pytest.mark.parametrize(
+    "provided,expected", [("arg-subdomain", "arg-subdomain"), (None, "@")]
+)
+def test_args_subdomain(provided, expected):
+    argv = [
+        "--username",
+        "arg-username",
+        "--password",
+        "arg-password",
+        "--domain",
+        "arg-domain",
+    ]
+    if provided:
+        argv.extend(
+            [
+                "--subdomain",
+                provided,
+            ]
+        )
+    args = parse_args(argv=argv)
+    assert args.subdomain == expected
