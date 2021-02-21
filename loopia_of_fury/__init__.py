@@ -30,6 +30,9 @@ def parse_args(
         "--record-type",
         default="A",
     )
+    parser.add_argument(
+        "--ip",
+    )
 
     args = parser.parse_args(args=argv)
     if not args.password:
