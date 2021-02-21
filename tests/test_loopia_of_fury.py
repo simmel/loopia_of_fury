@@ -33,3 +33,18 @@ def test_args_username_arg():
     username = "arg-username"
     args = parse_args(argv=["--username", username, "--password", "arg-password"])
     assert args.username == username
+
+
+def test_args_domain():
+    domain = "arg-domain"
+    args = parse_args(
+        argv=[
+            "--domain",
+            domain,
+            "--username",
+            "arg-username",
+            "--password",
+            "arg-password",
+        ]
+    )
+    assert args.domain == domain
