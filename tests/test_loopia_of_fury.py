@@ -56,3 +56,26 @@ def test_args_subdomain(provided, expected):
         )
     args = parse_args(argv=argv)
     assert args.subdomain == expected
+
+
+@pytest.mark.parametrize(
+    "provided,expected", [("arg-record-type", "arg-record-type"), (None, "A")]
+)
+def test_args_record_type(provided, expected):
+    argv = [
+        "--username",
+        "arg-username",
+        "--password",
+        "arg-password",
+        "--domain",
+        "arg-domain",
+    ]
+    if provided:
+        argv.extend(
+            [
+                "--record-type",
+                provided,
+            ]
+        )
+    args = parse_args(argv=argv)
+    assert args.record_type == expected
