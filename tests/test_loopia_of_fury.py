@@ -108,4 +108,4 @@ def test_args_ip(provided, expected):
     "provided,expected", [("192.0.2.1", "192.0.2.1"), ("2001:db8::1", "2001:db8::1")]
 )
 def test_get_ip(provided, expected):
-    assert get_ip() == expected
+    assert str(get_ip()) == expected
