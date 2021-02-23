@@ -12,7 +12,7 @@ __version__ = pkg_resources.get_distribution(__name__).version
 def parse_args(
     argv: Optional[Sequence[str]] = sys.argv[1:],
 ) -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="test")
+    parser = argparse.ArgumentParser()
     parser.add_argument(
         "--username",
         required=True,
