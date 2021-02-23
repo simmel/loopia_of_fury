@@ -41,8 +41,13 @@ def parse_args(
     return args
 
 
-def get_ip() -> Optional[Union[ipaddress.IPv4Address, ipaddress.IPv6Address]]:
-    return None
+def get_ip() -> Union[None, ipaddress.IPv6Address, ipaddress.IPv4Address]:
+    ip: Union[None, ipaddress.IPv6Address, ipaddress.IPv4Address] = None
+    try:
+        ip = ipaddress.ip_address("2001:DB8::1")
+    except ipaddress.AddressValueError as e:
+        return None
+    return ip
 
 
 def main() -> None:
