@@ -25,17 +25,21 @@ def parse_args(
     parser.add_argument(
         "--domain",
         required=True,
+        help="Domain name to be updated, e.g: example.com",
     )
     parser.add_argument(
         "--subdomain",
         default="@",
+        help="Subdomain name to be updated, e.g. smtp or www (default: %(default)s)",
     )
     parser.add_argument(
         "--record-type",
         default="A",
+        help="DNS record to update, e.g. AAAA or CNAME (default: %(default)s)",
     )
     parser.add_argument(
         "--ip",
+        help="IP address to update your DNS record to (default: find it via https://dyndns.loopia.se/checkip)",
     )
     parser.add_argument("--version", action="version", version=__version__)
 
