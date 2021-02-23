@@ -37,6 +37,7 @@ def parse_args(
     parser.add_argument(
         "--ip",
     )
+    parser.add_argument("--version", action="version", version=__version__)
 
     args = parser.parse_args(args=argv)
     if not args.password:
