@@ -1,9 +1,12 @@
-__version__ = "0.1.0"
 import argparse
 import ipaddress
 import os
 import sys
 from typing import Optional, Sequence, Union
+
+import pkg_resources
+
+__version__ = pkg_resources.get_distribution(__name__).version
 
 
 def parse_args(
