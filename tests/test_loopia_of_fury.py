@@ -29,8 +29,7 @@ def test_args_required():
 
 def test_args_password_env(monkeypatch):
     password = "env-password"
-    envs = {"LOOPIA_PASSWORD": password}
-    monkeypatch.setattr(os, "environ", envs)
+    monkeypatch.setenv("LOOPIA_PASSWORD", password)
     args = parse_args(argv=["--username", "arg-username", "--domain", "arg-domain"])
     assert args.password == password
 
