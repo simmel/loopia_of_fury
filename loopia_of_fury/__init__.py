@@ -2,8 +2,10 @@ import argparse
 import importlib.metadata
 import ipaddress
 import os
+import re
 import sys
-from typing import Optional, Sequence, Union
+import urllib.request
+from typing import Match, Optional, Sequence, Union
 
 __version__ = importlib.metadata.version(__name__)
 
@@ -49,10 +51,34 @@ def parse_args(
     return args
 
 
+def loopia_find_ip(response: str) -> Optional[str]:
+    match: Optional[Match[str]] = re.match(r".*: ([\d\.]*?)<.*", response)
+    ip_found = None
+    if match:
+        ip_found = match.group(1)
+    return ip_found
+
+
 def get_ip() -> Union[None, ipaddress.IPv6Address, ipaddress.IPv4Address]:
     ip: Union[None, ipaddress.IPv6Address, ipaddress.IPv4Address] = None
+    response = None
+    request = urllib.request.urlopen(
+        urllib.request.Request(
+            "https://dyndns.loopia.se/checkip",
+            headers={
+                "User-Agent": "{}/{} (+{})".format(
+                    __name__,
+                    __version__,
+                    importlib.metadata.metadata(__name__).get("Home-page"),
+                )
+            },
+        )
+    )
+    response = request.read().decode("utf-8")
+    ip_found = loopia_find_ip(response)
+
     try:
-        ip = ipaddress.ip_address("2001:DB8::1")
+        ip = ipaddress.ip_address(ip_found)
     except ipaddress.AddressValueError as e:
         return None
     return ip

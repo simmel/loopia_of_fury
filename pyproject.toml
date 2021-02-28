@@ -3,6 +3,7 @@ name = "loopia_of_fury"
 version = "0.1.0"
 description = 'Loopia of Fury - A "DynDNS" client for Loopia when you have MFA/BankID enabled '
 authors = ["Simon Lundström <github-commits@soy.se>"]
+homepage = "https://github.com/simmel/loopia_of_fury"
 
 [tool.poetry.dependencies]
 python = "^3.6"
