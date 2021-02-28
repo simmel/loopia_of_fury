@@ -1,7 +1,20 @@
 import os
+import urllib
 
+import loopia_of_fury
 import pytest
 from loopia_of_fury import __version__, argparse, get_ip, parse_args
+
+
+class MockResponse:
+    def __init__(self, *, data):
+        self.data = data
+
+    def read(self):
+        return self.data
+
+    def close(self):
+        pass
 
 
 def test_version():
@@ -106,5 +119,15 @@ def test_args_ip(provided, expected):
 @pytest.mark.parametrize(
     "provided,expected", [("192.0.2.1", "192.0.2.1"), ("2001:db8::1", "2001:db8::1")]
 )
-def test_get_ip(provided, expected):
+def test_get_ip(monkeypatch, provided, expected):
+    monkeypatch.setattr(
+        urllib.request,
+        "urlopen",
+        lambda _a: MockResponse(data=provided.encode("utf-8")),
+    )
+    monkeypatch.setattr(
+        loopia_of_fury,
+        "loopia_find_ip",
+        lambda a: a,
+    )
     assert str(get_ip()) == expected
