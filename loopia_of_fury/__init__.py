@@ -1,12 +1,12 @@
 import argparse
+import importlib.metadata
 import ipaddress
 import os
 import sys
 from typing import Optional, Sequence, Union
 
-import pkg_resources
+__version__ = importlib.metadata.version(__name__)
 
-__version__ = pkg_resources.get_distribution(__name__).version
 
 
 def parse_args(
