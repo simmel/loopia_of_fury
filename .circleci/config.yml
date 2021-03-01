@@ -4,14 +4,12 @@ orbs:
   python: circleci/python@1.3.2
 
 jobs:
-  build:
+  test:
     executor: python/default
     steps:
       - checkout
-      - python/load-cache
       - python/install-packages:
           pkg-manager: poetry
-      - python/save-cache
       - run:
           command: |
             poetry run pytest --version
@@ -20,4 +18,4 @@ jobs:
 workflows:
   main:
     jobs:
-      - build
+      - test
