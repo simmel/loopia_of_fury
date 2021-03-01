@@ -1,10 +1,10 @@
 version: 2.1
 
 orbs:
-  python: circleci/python@0.2.1
+  python: circleci/python@1.3.2
 
 jobs:
-  test:
+  build:
     executor: python/default
     steps:
       - checkout
@@ -20,4 +20,4 @@ jobs:
 workflows:
   main:
     jobs:
-      - test
+      - build
