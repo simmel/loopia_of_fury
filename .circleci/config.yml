@@ -6,6 +6,7 @@ orbs:
 jobs:
   test:
     executor: python/default
+    tag: 3.7
     steps:
       - checkout
       - python/install-packages:
@@ -20,8 +21,4 @@ jobs:
 workflows:
   main:
     jobs:
-      - test:
-          name: test-v<< matrix.tag >>
-          matrix:
-            parameters:
-              tag: ["3.5", "3.6", "3.7", "3.8", "3.9"]
+      - test
