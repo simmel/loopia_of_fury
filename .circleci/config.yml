@@ -12,10 +12,16 @@ jobs:
           pkg-manager: poetry
       - run:
           command: |
+            python --version
+            python3 --version
             poetry run pytest
           name: Test
 
 workflows:
   main:
     jobs:
-      - test
+      - test:
+          name: test-v<< matrix.version >>
+          matrix:
+            parameters:
+              version: ["3.5", "3.6", "3.7", "3.8", "3.9"]
