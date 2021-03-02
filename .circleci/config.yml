@@ -21,7 +21,7 @@ workflows:
   main:
     jobs:
       - test:
-          name: test-v<< matrix.version >>
+          name: test-v<< matrix.tag >>
           matrix:
             parameters:
               tag: ["3.5", "3.6", "3.7", "3.8", "3.9"]
