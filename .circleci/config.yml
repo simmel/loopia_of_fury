@@ -6,11 +6,11 @@ orbs:
 jobs:
   test:
     executor: python/default
-    tag: 3.7
     steps:
       - checkout
       - python/install-packages:
           pkg-manager: poetry
+          tag: 3.7
       - run:
           command: |
             python --version
