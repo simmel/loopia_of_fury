@@ -1,5 +1,4 @@
 import argparse
-import importlib.metadata
 import ipaddress
 import os
 import re
@@ -7,8 +6,19 @@ import sys
 import urllib.request
 from typing import Match, Optional, Sequence, Union
 
-__version__ = importlib.metadata.version(__name__)
+import pkg_resources
 
+__metadata__ = {
+    i[0]: i[1]
+    for i in [
+        a.split(": ")
+        for a in pkg_resources.get_distribution("loopia_of_fury")
+        .get_metadata("METADATA")
+        .rstrip()
+        .split("\n")
+    ]
+}
+__version__ = __metadata__["Version"]
 
 
 def parse_args(
@@ -69,7 +79,7 @@ def get_ip() -> Union[None, ipaddress.IPv6Address, ipaddress.IPv4Address]:
                 "User-Agent": "{}/{} (+{})".format(
                     __name__,
                     __version__,
-                    importlib.metadata.metadata(__name__).get("Home-page"),
+                    __metadata__["Home-page"],
                 )
             },
         )
