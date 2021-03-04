@@ -7,7 +7,6 @@ homepage = "https://github.com/simmel/loopia_of_fury"
 
 [tool.poetry.dependencies]
 python = "^3.6"
-importlib-resources = {version = "^5.1.2", python = "<3.8"}
 
 [tool.poetry.dev-dependencies]
 black = "^20.8b1"
