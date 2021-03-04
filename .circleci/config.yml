@@ -10,7 +10,6 @@ jobs:
       - checkout
       - python/install-packages:
           pkg-manager: poetry
-          tag: 3.7
       - run:
           command: |
             python --version
@@ -21,4 +20,5 @@ jobs:
 workflows:
   main:
     jobs:
-      - test
+      - test:
+          version: 3.7
