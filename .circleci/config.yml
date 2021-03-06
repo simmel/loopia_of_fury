@@ -7,6 +7,7 @@ jobs:
   test:
     executor:
       name: python/default
+      tag: << parameters.python-version >>
     steps:
       - checkout
       - python/install-packages:
@@ -22,4 +23,5 @@ workflows:
   main:
     jobs:
       - test:
-        tag: "3.7"
+        python-version:w
+        1G: "3.7"
