@@ -22,4 +22,4 @@ workflows:
   main:
     jobs:
       - test:
-        - tag: "3.7"
+        tag: "3.7"
