@@ -27,7 +27,7 @@ jobs:
 workflows:
   main:
     jobs:
-      - tests:
+      - test:
           matrix:
             parameters:
               version:
