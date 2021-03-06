@@ -5,8 +5,14 @@ orbs:
 
 jobs:
   test:
+    parameters:
+      version:
+        description: "The Python environment version to be tested."
+        default: "3.6"
+        type: string
     executor:
       name: python/default
+      tag: <<parameters.version>>
     steps:
       - checkout
       - python/install-packages:
@@ -21,5 +27,10 @@ jobs:
 workflows:
   main:
     jobs:
-      - test:
-        - version: "3.7"
+      - tests:
+          matrix:
+            parameters:
+              version:
+                - "3.6"
+                - "3.7"
+                - "3.8"
