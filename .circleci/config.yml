@@ -42,5 +42,7 @@ workflows:
           requires:
             - python/test
           filters:
+            branches:
+              ignore: /.*/
             tags:
               only: /.*/
