@@ -60,7 +60,7 @@ workflows:
   version-check:
     triggers:
       - schedule:
-          cron: "3 2 1 * *"
+          cron: "3 2 8 * *"
           filters:
             branches:
               only:
