@@ -30,4 +30,5 @@ workflows:
                 - "3.7"
                 - "3.8"
       - build:
-          requires: python/test
+          requires:
+            - python/test
