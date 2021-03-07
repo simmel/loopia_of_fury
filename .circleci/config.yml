@@ -5,6 +5,11 @@ orbs:
 
 jobs:
   test:
+    parameters:
+      version:
+        description: "The Python environment version to be tested."
+        default: "3.6"
+        type: string
     executor:
       name: python/default
       tag: <<parameters.version>>
@@ -22,7 +27,9 @@ jobs:
 workflows:
   main:
     jobs:
-      - test:
+      - python/test:
+          pkg-manager: poetry
+          test-tool: pytest
           matrix:
             parameters:
               version:
