@@ -25,6 +25,16 @@ jobs:
             poetry config pypi-token.pypi $PYPI_TOKEN
             poetry publish
           name: publish
+  version-check:
+    executor:
+      name: python/default
+    steps:
+      - checkout
+      # https://sources.debian.org/api/src/python3-defaults/
+      - run:
+          command: |
+            jq --version
+            curl --version
 
 workflows:
   main:
@@ -38,6 +48,7 @@ workflows:
                 - "3.6"
                 - "3.7"
                 - "3.8"
+                - "3.9"
       - build-and-publish:
           requires:
             - python/test
@@ -46,3 +57,9 @@ workflows:
               ignore: /.*/
             tags:
               only: /.*/
+  version-check:
+    triggers:
+      - schedule:
+          cron: "3 2 1 * *"
+    jobs:
+      - version-check
