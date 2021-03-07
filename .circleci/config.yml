@@ -4,25 +4,18 @@ orbs:
   python: circleci/python@1.3.2
 
 jobs:
-  test:
-    parameters:
-      version:
-        description: "The Python environment version to be tested."
-        default: "3.6"
-        type: string
+  build:
     executor:
       name: python/default
-      tag: <<parameters.version>>
     steps:
-      - checkout
       - python/install-packages:
           pkg-manager: poetry
       - run:
           command: |
             python --version
             python3 --version
-            poetry run pytest
-          name: Test
+            poetry build
+          name: build
 
 workflows:
   main:
@@ -36,3 +29,5 @@ workflows:
                 - "3.6"
                 - "3.7"
                 - "3.8"
+      - build:
+          requires: python/test
