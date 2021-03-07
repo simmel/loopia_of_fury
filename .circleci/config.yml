@@ -61,5 +61,9 @@ workflows:
     triggers:
       - schedule:
           cron: "3 2 1 * *"
+          filters:
+            branches:
+              only:
+                - master
     jobs:
       - version-check
