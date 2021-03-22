@@ -1,3 +1,4 @@
+import ipaddress
 import os
 import urllib
 import xmlrpc.client
@@ -96,7 +97,12 @@ def test_args_record_type(provided, expected):
 
 
 @pytest.mark.parametrize(
-    "provided,expected", [("192.0.2.1", "192.0.2.1"), (None, None)]
+    "provided,expected",
+    [
+        ("192.0.2.1", ipaddress.ip_address("192.0.2.1")),
+        ("2001:db8::1", ipaddress.ip_address("2001:db8::1")),
+        (None, None),
+    ],
 )
 def test_args_ip(provided, expected):
     argv = [
@@ -119,7 +125,11 @@ def test_args_ip(provided, expected):
 
 
 @pytest.mark.parametrize(
-    "provided,expected", [("192.0.2.1", "192.0.2.1"), ("2001:db8::1", "2001:db8::1")]
+    "provided,expected",
+    [
+        ("192.0.2.1", ipaddress.ip_address("192.0.2.1")),
+        ("2001:db8::1", ipaddress.ip_address("2001:db8::1")),
+    ],
 )
 def test_get_ip(monkeypatch, provided, expected):
     monkeypatch.setattr(
@@ -132,7 +142,7 @@ def test_get_ip(monkeypatch, provided, expected):
         "loopia_find_ip",
         lambda a: a,
     )
-    assert str(get_ip()) == expected
+    assert get_ip() == expected
 
 
 def test_xmlrpc_client(monkeypatch):
