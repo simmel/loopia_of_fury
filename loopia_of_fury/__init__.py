@@ -52,8 +52,20 @@ def parse_args(
         default="A",
         help="DNS record to update, e.g. AAAA or CNAME (default: %(default)s)",
     )
+
+    def ip_address(
+        ip: str,
+    ) -> Union[None, ipaddress.IPv6Address, ipaddress.IPv4Address]:
+        parsed_ip: Union[None, ipaddress.IPv6Address, ipaddress.IPv4Address] = None
+        try:
+            parsed_ip = ipaddress.ip_address(ip)
+        except Exception as e:
+            raise argparse.ArgumentTypeError(e)
+        return parsed_ip
+
     parser.add_argument(
         "--ip",
+        type=ip_address,
         help="IP address to update your DNS record to (default: find it via https://dyndns.loopia.se/checkip)",
     )
     parser.add_argument("--version", action="version", version=__version__)
