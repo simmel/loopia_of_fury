@@ -1,9 +1,11 @@
 import os
 import urllib
+import xmlrpc.client
 
 import loopia_of_fury
 import pytest
-from loopia_of_fury import __version__, argparse, get_ip, parse_args
+from loopia_of_fury import (__version__, argparse, get_ip, get_zonerecords,
+                            parse_args)
 
 
 class MockResponse:
@@ -131,3 +133,37 @@ def test_get_ip(monkeypatch, provided, expected):
         lambda a: a,
     )
     assert str(get_ip()) == expected
+
+
+def test_xmlrpc_client(monkeypatch):
+    monkeypatch.setattr(
+        xmlrpc.client.ServerProxy,
+        "__getattr__",
+        lambda _a, _b: lambda _u, _p, _d, _s: [
+            {
+                "ttl": 3600,
+                "record_id": 1337,
+                "type": "A",
+                "priority": 0,
+                "rdata": "192.0.2.1",
+            }
+        ],
+    )
+    argv = [
+        "--username",
+        "arg-username",
+        "--password",
+        "arg-password",
+        "--domain",
+        "arg-domain",
+    ]
+    args = parse_args(argv=argv)
+    client = xmlrpc.client.ServerProxy(uri="https://soy.se")
+    zone_records = get_zonerecords(client=client, args=args)
+
+    assert type(zone_records) == list
+    assert type(zone_records[0]) == dict
+    assert all(
+        key in zone_records[0]
+        for key in ["ttl", "record_id", "type", "priority", "rdata"]
+    )
