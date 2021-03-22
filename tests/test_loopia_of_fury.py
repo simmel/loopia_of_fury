@@ -102,6 +102,7 @@ def test_args_record_type(provided, expected):
         ("192.0.2.1", ipaddress.ip_address("192.0.2.1")),
         ("2001:db8::1", ipaddress.ip_address("2001:db8::1")),
         (None, None),
+        ("gurka", Exception),
     ],
 )
 def test_args_ip(provided, expected):
@@ -120,8 +121,13 @@ def test_args_ip(provided, expected):
                 provided,
             ]
         )
-    args = parse_args(argv=argv)
-    assert args.ip == expected
+    if expected is Exception:
+        with pytest.raises(SystemExit) as e:
+            args = parse_args(argv=argv)
+
+    else:
+        args = parse_args(argv=argv)
+        assert args.ip == expected
 
 
 @pytest.mark.parametrize(
