@@ -4,7 +4,8 @@ import os
 import re
 import sys
 import urllib.request
-from typing import Match, Optional, Sequence, Union
+import xmlrpc.client
+from typing import Any, Match, Optional, Sequence, Union
 
 import pkg_resources
 
@@ -19,6 +20,8 @@ __metadata__ = {
     ]
 }
 __version__ = __metadata__["Version"]
+
+API_SERVER = "https://api.loopia.se/RPCSERV"
 
 
 def parse_args(
@@ -92,6 +95,15 @@ def get_ip() -> Union[None, ipaddress.IPv6Address, ipaddress.IPv4Address]:
     except ipaddress.AddressValueError as e:
         return None
     return ip
+
+
+def get_zonerecords(
+    *, client: xmlrpc.client.ServerProxy, args: argparse.Namespace
+) -> Any:
+    zone_records = client.getZoneRecords(
+        args.username, args.password, args.domain, args.subdomain
+    )
+    return zone_records
 
 
 def main() -> None:
