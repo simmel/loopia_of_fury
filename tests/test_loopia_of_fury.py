@@ -6,7 +6,7 @@ import xmlrpc.client
 import loopia_of_fury
 import pytest
 from loopia_of_fury import (__version__, argparse, get_ip, get_zonerecords,
-                            parse_args)
+                            parse_args, update_zonerecords)
 
 
 class MockResponse:
@@ -183,3 +183,32 @@ def test_get_zonerecords(monkeypatch):
         key in zone_records[0]
         for key in ["ttl", "record_id", "type", "priority", "rdata"]
     )
+
+
+def test_update_zonerecords(monkeypatch):
+    monkeypatch.setattr(
+        xmlrpc.client.ServerProxy,
+        "__getattr__",
+        lambda _a, _b: lambda _u, _p, _d, _s, zone_record: [
+            {
+                "ttl": 3600,
+                "record_id": 1337,
+                "type": "A",
+                "priority": 0,
+                "rdata": "192.0.2.1",
+            }
+        ],
+    )
+    argv = [
+        "--username",
+        "arg-username",
+        "--password",
+        "arg-password",
+        "--domain",
+        "arg-domain",
+    ]
+    args = parse_args(argv=argv)
+    client = xmlrpc.client.ServerProxy(uri="https://soy.se")
+    result = update_zonerecords(client=client, args=args)
+
+    assert result == "OK"
