@@ -151,7 +151,7 @@ def test_get_ip(monkeypatch, provided, expected):
     assert get_ip() == expected
 
 
-def test_xmlrpc_client(monkeypatch):
+def test_get_zonerecords(monkeypatch):
     monkeypatch.setattr(
         xmlrpc.client.ServerProxy,
         "__getattr__",
