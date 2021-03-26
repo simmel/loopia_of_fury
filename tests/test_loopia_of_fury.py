@@ -186,18 +186,19 @@ def test_get_zonerecords(monkeypatch):
 
 
 def test_update_zonerecords(monkeypatch):
+    record = [
+        {
+            "ttl": 3600,
+            "record_id": 1337,
+            "type": "A",
+            "priority": 0,
+            "rdata": "192.0.2.1",
+        }
+    ]
     monkeypatch.setattr(
         xmlrpc.client.ServerProxy,
         "__getattr__",
-        lambda _a, _b: lambda _u, _p, _d, _s, zone_record: [
-            {
-                "ttl": 3600,
-                "record_id": 1337,
-                "type": "A",
-                "priority": 0,
-                "rdata": "192.0.2.1",
-            }
-        ],
+        lambda _a, _b: lambda _u, _p, _d, _s, zone_record: "OK",
     )
     argv = [
         "--username",
@@ -209,6 +210,6 @@ def test_update_zonerecords(monkeypatch):
     ]
     args = parse_args(argv=argv)
     client = xmlrpc.client.ServerProxy(uri="https://soy.se")
-    result = update_zonerecords(client=client, args=args)
+    result = update_zonerecords(client=client, args=args, zone_records=record)
 
     assert result == "OK"
