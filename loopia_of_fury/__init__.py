@@ -5,7 +5,7 @@ import re
 import sys
 import urllib.request
 import xmlrpc.client
-from typing import Any, Match, Optional, Sequence, Union
+from typing import Any, Dict, List, Match, Optional, Sequence, Union
 
 import pkg_resources
 
@@ -122,8 +122,8 @@ def update_zonerecords(
     *,
     client: xmlrpc.client.ServerProxy,
     args: argparse.Namespace,
-    zone_records: list[dict[str, str]],
-) -> list[str]:
+    zone_records: List[Dict[str, str]],
+) -> List[str]:
     results = []
     for zone_record in zone_records:
         if zone_record["type"] == args.record_type:
