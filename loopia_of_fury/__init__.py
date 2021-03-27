@@ -118,6 +118,23 @@ def get_zonerecords(
     return zone_records
 
 
+def update_zonerecords(
+    *,
+    client: xmlrpc.client.ServerProxy,
+    args: argparse.Namespace,
+    zone_records: list[dict[str, str]],
+) -> list[str]:
+    results = []
+    for zone_record in zone_records:
+        if zone_record["type"] == args.record_type:
+            zone_record["rdata"] = str(args.ip)
+            result = client.updateZoneRecord(
+                args.username, args.password, args.domain, args.subdomain, zone_record
+            )
+            results.append(str(result))
+    return results
+
+
 def main() -> None:
     args = parse_args()
     print("gurka")
