@@ -212,4 +212,4 @@ def test_update_zonerecords(monkeypatch):
     client = xmlrpc.client.ServerProxy(uri="https://soy.se")
     result = update_zonerecords(client=client, args=args, zone_records=record)
 
-    assert result == "OK"
+    assert result == ["OK"]
