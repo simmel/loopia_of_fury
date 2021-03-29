@@ -185,23 +185,37 @@ def test_get_zonerecords(monkeypatch):
     )
 
 
-def test_update_zonerecords(monkeypatch):
-    ip = "192.0.2.2"
-    record_type = "A"
-
+@pytest.mark.parametrize(
+    "ip_provided,ip_expected,record_type_provided,record_type_expected,result_provided,result_expected",
+    [
+        ("192.0.2.1", "192.0.2.2", "A", "A", "OK", "OK"),
+        ("2001:db8::1", "2001:db8::2", "AAAA", "AAAA", "OK", "OK"),
+        ("2001:db8::1", "192.0.2.2", "AAAA", "AAAA", "UNKNOWN_ERROR", "UNKNOWN_ERROR"),
+        ("192.0.2.2", "2001:db8::1", "A", "A", "UNKNOWN_ERROR", "UNKNOWN_ERROR"),
+    ],
+)
+def test_update_zonerecords(
+    monkeypatch,
+    ip_provided,
+    ip_expected,
+    record_type_provided,
+    record_type_expected,
+    result_provided,
+    result_expected,
+):
     record = [
         {
             "ttl": 3600,
             "record_id": 1337,
-            "type": "A",
+            "type": record_type_provided,
             "priority": 0,
-            "rdata": "192.0.2.1",
+            "rdata": ip_provided,
         }
     ]
     monkeypatch.setattr(
         xmlrpc.client.ServerProxy,
         "__getattr__",
-        lambda _a, _b: lambda _u, _p, _d, _s, zone_record: "OK",
+        lambda _a, _b: lambda _u, _p, _d, _s, zone_record: result_provided,
     )
     argv = [
         "--username",
@@ -211,9 +225,9 @@ def test_update_zonerecords(monkeypatch):
         "--domain",
         "arg-domain",
         "--ip",
-        ip,
+        ip_expected,
         "--record-type",
-        record_type,
+        record_type_expected,
     ]
     args = parse_args(argv=argv)
     client = xmlrpc.client.ServerProxy(uri="https://soy.se")
@@ -221,6 +235,6 @@ def test_update_zonerecords(monkeypatch):
 
     result = results[record[0]["record_id"]]
 
-    assert result["result"] == "OK"
-    assert result["zone_record"]["rdata"] == ip
-    assert result["zone_record"]["type"] == record_type
+    assert result["result"] == result_expected
+    assert result["zone_record"]["rdata"] == ip_expected
+    assert result["zone_record"]["type"] == record_type_expected
