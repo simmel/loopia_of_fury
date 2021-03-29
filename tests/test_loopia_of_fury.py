@@ -186,6 +186,9 @@ def test_get_zonerecords(monkeypatch):
 
 
 def test_update_zonerecords(monkeypatch):
+    ip = "192.0.2.2"
+    record_type = "A"
+
     record = [
         {
             "ttl": 3600,
@@ -207,6 +210,10 @@ def test_update_zonerecords(monkeypatch):
         "arg-password",
         "--domain",
         "arg-domain",
+        "--ip",
+        ip,
+        "--record-type",
+        record_type,
     ]
     args = parse_args(argv=argv)
     client = xmlrpc.client.ServerProxy(uri="https://soy.se")
@@ -215,3 +222,5 @@ def test_update_zonerecords(monkeypatch):
     result = results[record[0]["record_id"]]
 
     assert result["result"] == "OK"
+    assert result["zone_record"]["rdata"] == ip
+    assert result["zone_record"]["type"] == record_type
