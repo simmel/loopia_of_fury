@@ -1,4 +1,5 @@
-FROM python:3.7-slim-buster AS build
+ARG PYTHON_VERSION=3.7
+FROM python:${PYTHON_VERSION}-slim-buster AS build
 
 WORKDIR /usr/src
 
