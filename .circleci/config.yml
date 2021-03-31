@@ -22,8 +22,7 @@ jobs:
           name: build
       - run:
           command: |
-            poetry --version
-            poetry config pypi-token.pypi GURK$PYPI_TOKEN
+            poetry config pypi-token.pypi $PYPI_TOKEN
             poetry publish
           name: publish
   version-check:
