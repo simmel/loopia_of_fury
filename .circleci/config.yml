@@ -55,9 +55,7 @@ workflows:
             - python/test
           filters:
             branches:
-              # ignore: /.*/
-              only:
-                - main
+              ignore: /.*/
             tags:
               only: /.*/
       - docker/publish:
