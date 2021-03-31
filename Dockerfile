@@ -11,6 +11,11 @@ ENV PATH=/venv/bin:$PATH
 ENV PYTHONPATH=/venv/lib/python${PYTHON_VERSION}/site-packages
 RUN pip install .
 
+# venv won't overwrite symlinks when they point to non-existing files...
+## python3 -m venv --upgrade /venv
+#Error: [Errno 2] No such file or directory: '/venv/bin/python3': '/venv/bin/python3'
+RUN rm -f /venv/bin/python*
+
 # Distroless don't currently have version tags
 # FROM gcr.io/distroless/python3-debian10@sha256:33ddd28c748279670ad4d7ca9ad088c233f2f7bef6daf0a6ed00fc89490dffce
 # There's no real difference so always run the debug container
