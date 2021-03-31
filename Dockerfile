@@ -6,7 +6,10 @@ WORKDIR /usr/src
 COPY poetry.lock pyproject.toml ./
 COPY loopia_of_fury/ ./loopia_of_fury/
 
-RUN pip install . --no-cache-dir -t /venv
+RUN python3 -m venv /venv
+ENV PATH=/venv/bin:$PATH
+ENV PYTHONPATH=/venv/lib/python${PYTHON_VERSION}/site-packages
+RUN pip install .
 
 # Distroless don't currently have version tags
 # FROM gcr.io/distroless/python3-debian10@sha256:33ddd28c748279670ad4d7ca9ad088c233f2f7bef6daf0a6ed00fc89490dffce
