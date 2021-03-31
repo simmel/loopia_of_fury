@@ -54,7 +54,9 @@ workflows:
             - python/test
           filters:
             branches:
-              ignore: /.*/
+              # ignore: /.*/
+              only:
+                - main
             tags:
               only: /.*/
   version-check:
