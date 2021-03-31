@@ -24,6 +24,9 @@ COPY --from=build /venv /venv
 ENV PATH=/venv/bin:$PATH
 ENV PYTHONPATH=/venv/lib/python${PYTHON_VERSION}/site-packages
 
-# ENTRYPOINT ["/usr/bin/python3", "/app/main.py"]
-ENTRYPOINT ["/usr/bin/python3", "/venv/bin/loopia_of_fury"]
+# Upgrade the venv so we get this containers python3
+# Also, without --without-pip it will try to install pip which will fail.
+RUN python3 -m venv --upgrade --without-pip /venv
+
+ENTRYPOINT ["loopia_of_fury"]
 CMD ["--help"]
