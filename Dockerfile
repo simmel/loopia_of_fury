@@ -21,7 +21,8 @@ FROM gcr.io/distroless/python3-debian10:debug@sha256:f6c3961ea6a177c21e31449e483
 ARG PYTHON_VERSION=3.7
 
 COPY --from=build /venv /venv
-ENV PYTHONPATH=/venv
+ENV PATH=/venv/bin:$PATH
+ENV PYTHONPATH=/venv/lib/python${PYTHON_VERSION}/site-packages
 
 # ENTRYPOINT ["/usr/bin/python3", "/app/main.py"]
 ENTRYPOINT ["/usr/bin/python3", "/venv/bin/loopia_of_fury"]
