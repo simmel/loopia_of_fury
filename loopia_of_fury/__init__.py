@@ -139,6 +139,10 @@ def update_zonerecords(
     return results
 
 
+def check_results(results: Dict[str, Dict[str, Collection[str]]]) -> bool:
+    return all([results[v]["result"] == "OK" for v in results])
+
+
 def main() -> None:
     args = parse_args()
     print("gurka")
