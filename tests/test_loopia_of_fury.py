@@ -5,8 +5,8 @@ import xmlrpc.client
 
 import loopia_of_fury
 import pytest
-from loopia_of_fury import (__version__, argparse, get_ip, get_zonerecords,
-                            parse_args, update_zonerecords)
+from loopia_of_fury import (__version__, argparse, check_results, get_ip,
+                            get_zonerecords, parse_args, update_zonerecords)
 
 
 class MockResponse:
@@ -238,3 +238,28 @@ def test_update_zonerecords(
     assert result["result"] == result_expected
     assert result["zone_record"]["rdata"] == ip_expected
     assert result["zone_record"]["type"] == record_type_expected
+
+
+@pytest.mark.parametrize(
+    "provided,expected",
+    [
+        (["OK", "OK"], True),
+        (["OK", "UNKNOWN_ERROR"], False),
+        (["AUTH_ERROR", "OK"], False),
+        (["OK", "BAD_INDATA"], False),
+    ],
+)
+def test_check_results(
+    provided,
+    expected,
+):
+    results = {}
+    for i in range(len(provided)):
+        results[i] = {
+            "zone_record": {},
+            "result": provided[i],
+        }
+
+    result = check_results(results)
+
+    assert result == expected
