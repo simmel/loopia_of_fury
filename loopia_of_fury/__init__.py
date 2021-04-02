@@ -140,6 +140,7 @@ def update_zonerecords(
 
 
 def check_results(results: Dict[str, Dict[str, Collection[str]]]) -> bool:
+    # https://www.loopia.com/api/status/
     return all([results[v]["result"] == "OK" for v in results])
 
 
