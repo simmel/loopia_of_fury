@@ -56,6 +56,23 @@ def parse_args(
         default="A",
         help="DNS record to update, e.g. AAAA or CNAME (default: %(default)s)",
     )
+    loglevel = parser.add_mutually_exclusive_group()
+    loglevel.add_argument(
+        "-v",
+        dest="loglevel",
+        default="WARNING",
+        action="store_const",
+        const="INFO",
+        help="Set log level to INFO (default: %(default)s)",
+    )
+    loglevel.add_argument(
+        "-d",
+        dest="loglevel",
+        default="WARNING",
+        action="store_const",
+        const="DEBUG",
+        help="Set log level to DEBUG (default: %(default)s)",
+    )
 
     def ip_address(
         ip: str,
@@ -77,6 +94,8 @@ def parse_args(
     args = parser.parse_args(args=argv)
     if not args.password:
         parser.error("Password is required: ({!r})".format(args.password))
+
+    logger.setLevel(args.loglevel)
     return args
 
 
