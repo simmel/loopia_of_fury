@@ -61,7 +61,6 @@ workflows:
       - docker/publish:
           requires:
             - build-and-publish
-          deploy: false
           image: darksoy/$CIRCLE_PROJECT_REPONAME
   version-check:
     triggers:
