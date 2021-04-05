@@ -5,8 +5,8 @@ import xmlrpc.client
 
 import loopia_of_fury
 import pytest
-from loopia_of_fury import (__version__, argparse, check_results, get_ip,
-                            get_zonerecords, parse_args, update_zonerecords)
+from loopia_of_fury import (argparse, check_results, get_ip, get_zonerecords,
+                            parse_args, update_zonerecords)
 
 
 class MockResponse:
@@ -18,10 +18,6 @@ class MockResponse:
 
     def close(self):
         pass
-
-
-def test_version():
-    assert __version__ == "0.1.0"
 
 
 def test_args_password_none():
