@@ -157,4 +157,15 @@ def check_results(results: Dict[str, Dict[str, Collection[str]]]) -> bool:
 
 def main() -> None:
     args = parse_args()
-    print("gurka")
+
+    if not args.ip:
+        args.ip = get_ip()
+
+    client = xmlrpc.client.ServerProxy(uri=API_SERVER)
+    zone_records = get_zonerecords(client=client, args=args)
+    results = update_zonerecords(client=client, args=args, zone_records=zone_records)
+    result = check_results(results)
+    if not result:
+        logger.error("Couldn't update IP", extra=results)
+    else:
+        logger.info("IP updated", extra=results)
