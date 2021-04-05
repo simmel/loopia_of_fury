@@ -9,6 +9,9 @@ from typing import (Any, Collection, Dict, List, Match, Optional, Sequence,
                     Union)
 
 import pkg_resources
+from su.logging import console, logging, structured  # type: ignore
+
+logger = logging.getLogger(__name__)
 
 __metadata__ = {
     i[0]: i[1]
@@ -105,7 +108,12 @@ def get_ip() -> Union[None, ipaddress.IPv6Address, ipaddress.IPv4Address]:
 
     try:
         ip = ipaddress.ip_address(ip_found)
+        logger.debug("Found IP", extra={"ip": ip})
     except ipaddress.AddressValueError as e:
+        logger.warning(
+            "Couldn't find IP at Loopia",
+            extra={"response": response, "ip_found": ip_found},
+        )
         return None
     return ip
 
@@ -116,6 +124,7 @@ def get_zonerecords(
     zone_records = client.getZoneRecords(
         args.username, args.password, args.domain, args.subdomain
     )
+    logger.debug("Got zone records", extra=zone_records)
     return zone_records
 
 
@@ -141,7 +150,9 @@ def update_zonerecords(
 
 def check_results(results: Dict[str, Dict[str, Collection[str]]]) -> bool:
     # https://www.loopia.com/api/status/
-    return all([results[v]["result"] == "OK" for v in results])
+    result = all([results[v]["result"] == "OK" for v in results])
+    logger.debug("Calculated result", extra={"result": result, "results": results})
+    return result
 
 
 def main() -> None:
