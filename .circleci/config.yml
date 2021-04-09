@@ -31,11 +31,12 @@ jobs:
       name: python/default
     steps:
       - checkout
-      # https://sources.debian.org/api/src/python3-defaults/
       - run:
+        # https://stackoverflow.com/a/31933234
           command: |
-            jq --version
-            curl --version
+            curl -sSf -o 1.json https://python-api.soy.se/v1/versions
+            awk '/version: \[/ { print $2 }' .circleci/config.yml > 2.json
+            jq --exit-status --argfile a 1.json --argfile b 2.json -n '($a | (.. | arrays) |= sort) as $a | ($b | (.. | arrays) |= sort) as $b | $a == $b'
 
 workflows:
   main:
@@ -48,11 +49,7 @@ workflows:
               only: /.+/
           matrix:
             parameters:
-              version:
-                - "3.6"
-                - "3.7"
-                - "3.8"
-                - "3.9"
+              version: ["3.6","3.7","3.8","3.9"]
       - build-and-publish:
           requires:
             - python/test
