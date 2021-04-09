@@ -43,6 +43,9 @@ workflows:
       - python/test:
           pkg-manager: poetry
           test-tool: pytest
+          filters:
+            tags:
+              only: /.+/
           matrix:
             parameters:
               version:
@@ -54,11 +57,14 @@ workflows:
           requires:
             - python/test
           filters:
+            tags:
+              only: /.+/
             branches:
               ignore: /.*/
-            tags:
-              only: /.*/
       - docker/publish:
+          filters:
+            tags:
+              only: /.+/
           requires:
             - build-and-publish
           image: darksoy/$CIRCLE_PROJECT_REPONAME
