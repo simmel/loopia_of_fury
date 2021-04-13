@@ -22,7 +22,7 @@ RUN rm -f /venv/bin/python*
 # REPOSITORY                           TAG                          IMAGE ID       CREATED              SIZE
 # loopia_of_fury                       debug                        acc34f12f15d   13 seconds ago       65MB
 # loopia_of_fury                       prod                         0575b8564299   About a minute ago   63.9MB
-FROM gcr.io/distroless/python3-debian10:debug@sha256:f6c3961ea6a177c21e31449e4833904e35434ba2038757771b0a2d3dc7958a31
+FROM gcr.io/distroless/python3-debian10:debug@sha256:396827c703e8f43f6483d2e723592ea3bfaeafc5d327bcfca9cddaed74ead3cf
 ARG PYTHON_VERSION=3.7
 
 COPY --from=build /venv /venv
