@@ -26,3 +26,9 @@ $ # or
 $  export LOOPIA_PASSWORD=supersecretpassword
 $ loopia_of_fury --user youruser@loopiaapi
 ```
+
+### Specify which IP to use
+
+```terminal
+$ loopia_of_fury --user youruser@loopiaapi --ip 192.0.2.1
+```
