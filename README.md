@@ -18,9 +18,11 @@ $ docker run darksoy/loopia_of_fury
 
 ## Usage
 
+By default `loopia_of_fury` uses https://dyndns.loopia.se/checkip to determine
+your external IP.
 ```terminal
-$ loopia_of_fury --user youruser@loopiaapi --password supersecretpassword --ip 192.0.2.1
+$ loopia_of_fury --user youruser@loopiaapi --password supersecretpassword
 $ # or
 $  export LOOPIA_PASSWORD=supersecretpassword
-$ loopia_of_fury --user youruser@loopiaapi --ip 192.0.2.1
+$ loopia_of_fury --user youruser@loopiaapi
 ```
