@@ -4,8 +4,16 @@ A "DynDNS" client for Loopia when you have MFA/BankID enabled
 
 ## Installation
 
+### Standalone usage
 ```terminal
-$ pip3 install git+https://github.com/simmel/loopia_of_fury.git
+# You should specify a version with ==1.a.released.version
+$ pip3 install loopia_of_fury
+```
+
+### Container usage
+```terminal
+# You should specify a version with :1.a.released.version
+$ docker run darksoy/loopia_of_fury
 ```
 
 ## Usage
