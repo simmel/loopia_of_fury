@@ -1,3 +1,4 @@
+#syntax=docker/dockerfile:1.2
 ARG PYTHON_VERSION=3.7
 FROM python:${PYTHON_VERSION}-slim-buster AS build
 
