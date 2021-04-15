@@ -21,14 +21,10 @@ jobs:
           command: |
             poetry build
           name: build
-      - run:
-          command: |
-            find . -type d
-          name: wat
       - persist_to_workspace:
           root: .
           paths:
-            - dists
+            - dist
   publish-package:
     executor:
       name: python/default
