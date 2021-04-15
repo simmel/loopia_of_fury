@@ -36,6 +36,12 @@ jobs:
             poetry config pypi-token.pypi $PYPI_TOKEN
             poetry publish
           name: publish
+  build-container:
+    executor: docker/machine
+    steps:
+      - checkout
+      - docker/build:
+          image: darksoy/$CIRCLE_PROJECT_REPONAME
   version-check:
     executor:
       name: python/default
@@ -74,17 +80,13 @@ workflows:
               only: /.+/
             branches:
               ignore: /.*/
-      - docker/publish:
-          step-name: build-container
+      - build-container:
           requires:
             -  python/test
           filters:
             tags:
               only: /.+/
-          image: darksoy/$CIRCLE_PROJECT_REPONAME
-          deploy: false
       - docker/publish:
-          step-name: publish-container
           requires:
             - build-container
           context:
