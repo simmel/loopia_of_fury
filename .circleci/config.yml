@@ -5,7 +5,7 @@ orbs:
   python: circleci/python@1.3.2
 
 jobs:
-  build-and-publish:
+  build-package:
     executor:
       name: python/default
     steps:
@@ -21,6 +21,16 @@ jobs:
           command: |
             poetry build
           name: build
+      - persist_to_workspace:
+          root: .
+          paths:
+            - dists
+  publish-package:
+    executor:
+      name: python/default
+    steps:
+      - attach_workspace:
+          at: .
       - run:
           command: |
             poetry config pypi-token.pypi $PYPI_TOKEN
@@ -50,9 +60,15 @@ workflows:
           matrix:
             parameters:
               version: ["3.6","3.7","3.8","3.9"]
-      - build-and-publish:
+      - build-package:
           requires:
             - python/test
+          filters:
+            tags:
+              only: /.+/
+      - publish-package:
+          requires:
+            -  build-package
           filters:
             tags:
               only: /.+/
@@ -64,8 +80,10 @@ workflows:
           filters:
             tags:
               only: /.+/
+            branches:
+              ignore: /.*/
           requires:
-            - build-and-publish
+            - python/test
           image: darksoy/$CIRCLE_PROJECT_REPONAME
           tag: "latest,$CIRCLE_TAG"
   version-check:
