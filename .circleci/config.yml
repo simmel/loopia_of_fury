@@ -42,8 +42,8 @@ jobs:
       - checkout
       - docker/build:
           image: darksoy/$CIRCLE_PROJECT_REPONAME
-        environment:
-          DOCKER_BUILDKIT: 1
+    environment:
+      DOCKER_BUILDKIT: 1
   version-check:
     executor:
       name: python/default
