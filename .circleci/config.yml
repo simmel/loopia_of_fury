@@ -75,6 +75,18 @@ workflows:
             branches:
               ignore: /.*/
       - docker/publish:
+          step-name: build-container
+          requires:
+            -  python/test
+          filters:
+            tags:
+              only: /.+/
+          image: darksoy/$CIRCLE_PROJECT_REPONAME
+          deploy: false
+      - docker/publish:
+          step-name: publish-container
+          requires:
+            - build-container
           context:
             - docker-hub-credentials
           filters:
@@ -82,8 +94,6 @@ workflows:
               only: /.+/
             branches:
               ignore: /.*/
-          requires:
-            - python/test
           image: darksoy/$CIRCLE_PROJECT_REPONAME
           tag: "latest,$CIRCLE_TAG"
   version-check:
