@@ -14,11 +14,6 @@ jobs:
           pkg-manager: poetry
       - run:
           command: |
-            python --version
-            python3 --version
-          name: shrug
-      - run:
-          command: |
             poetry build
           name: build
       - persist_to_workspace:
