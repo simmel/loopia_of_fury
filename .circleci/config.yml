@@ -25,6 +25,7 @@ jobs:
           root: .
           paths:
             - dist
+            - pyproject.toml
   publish-package:
     executor:
       name: python/default
