@@ -68,7 +68,7 @@ workflows:
               only: /.+/
           matrix:
             parameters:
-              version: ["3.6","3.7","3.8","3.9"]
+              version: ["3.6","3.7","3.8","3.9", "3.10"]
       - build-package:
           requires:
             - python/test
