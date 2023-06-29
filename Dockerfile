@@ -1,6 +1,6 @@
 #syntax=docker/dockerfile:1.2
-ARG PYTHON_VERSION=3.7
-FROM python:${PYTHON_VERSION}-slim-buster AS build
+ARG PYTHON_VERSION=3.9
+FROM python:${PYTHON_VERSION}-slim-bullseye AS build
 
 WORKDIR /usr/src
 
@@ -23,7 +23,7 @@ RUN rm -f /venv/bin/python*
 # REPOSITORY                           TAG                          IMAGE ID       CREATED              SIZE
 # loopia_of_fury                       debug                        acc34f12f15d   13 seconds ago       65MB
 # loopia_of_fury                       prod                         0575b8564299   About a minute ago   63.9MB
-FROM gcr.io/distroless/python3-debian10:debug@sha256:396827c703e8f43f6483d2e723592ea3bfaeafc5d327bcfca9cddaed74ead3cf
+FROM gcr.io/distroless/python3-debian11:debug@sha256:cfcebacb0134233b681cea9b8fb7a9c7cb2a42e25798c8bd3783c76c5cdfd15c
 
 COPY --from=build /venv /venv
 ENV PATH=/venv/bin:$PATH
