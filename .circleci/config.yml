@@ -97,13 +97,3 @@ workflows:
               ignore: /.*/
           image: darksoy/$CIRCLE_PROJECT_REPONAME
           tag: "latest,$CIRCLE_TAG"
-  version-check:
-    triggers:
-      - schedule:
-          cron: "3 2 * * *"
-          filters:
-            branches:
-              only:
-                - main
-    jobs:
-      - version-check
